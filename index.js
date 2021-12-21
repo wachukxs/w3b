@@ -29,13 +29,21 @@
 const crypto = require('crypto');
 
 function encryptText(text) {
-    return crypto.createCipheriv('aes-256-ccm', process.env.SECRET_KEY, process.env.IV)
-        .update('Message to hide!', "ascii") // update the cipher with our secret string
-        .final("hex") // save the encryption as hex-encoded
+    try {
+        return crypto.createCipheriv('aes-256-ccm', process.env.SECRET_KEY, process.env.IV)
+            .update('Message to hide!', "ascii") // update the cipher with our secret string
+            .final("hex") // save the encryption as hex-encoded
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 function decryptText(encryption) {
-    return crypto.createDecipheriv('aes-256-ccm', process.env.SECRET_KEY, process.env.IV)
-        .update(encryption, "hex")
-        .final("ascii")
+    try {
+        return crypto.createDecipheriv('aes-256-ccm', process.env.SECRET_KEY, process.env.IV)
+            .update(encryption, "hex")
+            .final("ascii")
+    } catch (error) {
+        console.error(error)
+    }
 }
